@@ -1,0 +1,3 @@
+first we have to launch an ec2 instance with public ip enabled
+connect to the instance through terminal
+update the instance    - sudo apt update
