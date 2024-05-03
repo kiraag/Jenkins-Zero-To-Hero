@@ -1,3 +1,98 @@
 first we have to launch an ec2 instance with public ip enabled
-connect to the instance through terminal
-update the instance    - sudo apt update
+
+connect to the instance through terminal  -  ssh -i *key-pair* ubuntu@(ip-address of ec2 instance)
+
+update the instance  -  sudo apt update
+
+after that install java  -  sudo apt install openjdk-17-jre
+
+check java installed or not  -  java --version
+
+after that install jenkins by this code  -  
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+
+or
+
+refer to the official jenkins documentation and select the requred os and copy the given code and run in terminal
+
+check jenkins is installed or not  -  jenkins --version
+
+after that check ec2 security group, because it has to allow incoming traffic.
+
+now check by entering the ip-address with port num in a new tab weather the jenkins is working or not  -  http://(ip-address):8080
+
+now it will ask to unlock jenkins & gives location for the default password,  we have to cat the location and copy the password in our server.
+
+now it shows the password and we have to give it in the jenkins password box.
+
+now it will go to login page & asks to install suggested plugins or to install slected plugins.
+
+go with "install suggested plugins", it will install required plugins
+
+after that it will ask to give new username & password & name, give as you want
+
+after that it will show for jenkins url, leeave as it is and go next, you will be at main dashboard of jenkins.
+
+*************************** jenkins installation is completed ******************************
+
+now docker have to be configured in the same server to be used as an agent
+
+sudo apt install docker.io   -    this command will install the docker
+
+after installing docker, grant permissions to both ubuntu & jenkins user under Docker by root user & restart docker -    
+
+sudo su
+usermod -aG docker jenkins
+usermod -aG docker ubuntu
+systemctl restart docker
+
+now switch to jenkins user  -  su - jenkins
+
+now check if docker is installed and there is sufficient permissions    -    docker run hello-world
+
+if it gives proper responce (hello from docker), then we can consider the docker is installed
+
+if not installed, again use *  usermod -aG docker jenkins
+                                usermod -aG docker ubuntu
+                                systemctl restart docker
+
+again check if properly installed or not.
+
+after that, restart the jenkins page and again sign-in.
+
+now in dashboard, go to manage jenkins and click on Plugins, now install the docker pipeline plugin in Available plugins box. (download now & install after restart).
+
+after plugins downloaded, now again restart the jenkins.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
